@@ -20,17 +20,19 @@ namespace DataCollections
             };
 
             var humanOrder = (from human in humans1
-                              
-                     group human by human.Name.Count() into g
-                     orderby g.Key
-                     select g).ToList();
+                     orderby human.Name.Length ascending
+                     select human).ToList();
                         
             Console.WriteLine("Järjestatud nimed:");
             foreach(var group in humanOrder)
             {
-                Console.WriteLine(group.Key);
+                Console.WriteLine(group.Name);
             }
             Console.WriteLine();
+
+            var namesPerLength = (from item in humanOrder
+                                  group item.Name.Length by item.Name.Length into x
+                                  select x);
 
             Console.WriteLine("Mitu nime iga pikkusega:");
             for (int i = 0; i < 100; i++)
@@ -42,17 +44,6 @@ namespace DataCollections
                     Console.WriteLine(i + ": " + abc.Count());
             }
             Console.WriteLine();
-
-            Console.WriteLine("Paarisarvulised nimed: ");
-
-            var loc = (from human in humans1
-                       where human.Name.Count() % 2 == 0
-                       select human).ToList();
-
-            foreach(var nam in loc)
-            {
-                Console.WriteLine(nam.Name);
-            }
             
             Console.ReadLine();
         }
